@@ -24,9 +24,12 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Logger;
 
+import static java.lang.Integer.parseInt;
 import static org.bukkit.Material.SAPLING;
 
 public final class GrowListener implements Listener {
+
+
 
     public final Logger logger = Logger.getLogger("MineCraft");
 
@@ -42,11 +45,10 @@ public final class GrowListener implements Listener {
     @EventHandler
     public void EventListener(PlayerToggleSneakEvent event) {
 
-        Random itemRand = new Random();
-
         if (event.isSneaking()) {
             Location location = event.getPlayer().getLocation();
-            Block belowBlock = event.getPlayer().getWorld().getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+            World world = location.getWorld();
+            Block belowBlock = world.getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ());
             if (belowBlock.getType() == SAPLING) {
                 logger.info("Sapping Before at " + belowBlock.getLocation().toString() + ": " + belowBlock.toString());
 
@@ -57,19 +59,19 @@ public final class GrowListener implements Listener {
                 state.setData(sap);
                 state.update(true, true);
 
+                String oldTimeSpeed = world.getGameRuleValue("randomTickSpeed");
+
                 // Set randomTickSpeed to higher
+                location.getWorld().setGameRuleValue("randomTickSpeed", "20");
+                logger.info("Tick: " + world.getGameRuleValue("randomTickSpeed"));
 
-                // Spawn happyVillager particles
-                int amount = 15;
-                for (int i1 = 0; i1 < amount; ++i1)
-                {
-                    double d0 = itemRand.nextGaussian() * 0.02D;
-                    double d1 = itemRand.nextGaussian() * 0.02D;
-                    double d2 = itemRand.nextGaussian() * 0.02D;
-                    event.getPlayer().getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location.getX() + d0, location.getBlockY() + d1, location.getBlockZ() + d2, 0);
-                }
+                // Schedule randomTimeSpeed game rule to return to normal.
+                Bukkit.getServer().getScheduler().runTaskLater(TreeTwerk.getPlugin(), () -> {
+                    location.getWorld().setGameRuleValue("randomTickSpeed", oldTimeSpeed);
+                    logger.info("Tick: " + world.getGameRuleValue("randomTickSpeed"));
+                },5);//run code in run() after ticksToWait ticks
 
-
+                spawnBonemealParticles(location.getWorld(), location);
 
                 // setIsInstantGrowable(true);
                 logger.info("Sapping After at " + belowBlock.getLocation().toString() + ": " + belowBlock.toString());
@@ -77,5 +79,33 @@ public final class GrowListener implements Listener {
             }
         }
 
+    }
+
+    private static void spawnBonemealParticles(World worldIn, Location pos)
+    {
+        Random itemRand = new Random();
+
+        BlockState iblockstate = worldIn.getBlockAt(pos).getState();
+
+        if (iblockstate.getType() != Material.AIR)
+        {
+            for (int i = 0; i < 15; ++i)
+            {
+                double d0 = itemRand.nextGaussian() * 0.02D;
+                double d1 = itemRand.nextGaussian() * 0.02D;
+                double d2 = itemRand.nextGaussian() * 0.02D;
+                worldIn.spawnParticle(Particle.VILLAGER_HAPPY, (double)((float)pos.getX() + itemRand.nextFloat()), pos.getY() + (double)itemRand.nextFloat() * iblockstate.getLocation(pos).getY(), (double)((float)pos.getZ() + itemRand.nextFloat()), 0, d0, d1, d2);
+            }
+        }
+        else
+        {
+            for (int i1 = 0; i1 < 15; ++i1)
+            {
+                double d0 = itemRand.nextGaussian() * 0.02D;
+                double d1 = itemRand.nextGaussian() * 0.02D;
+                double d2 = itemRand.nextGaussian() * 0.02D;
+                worldIn.spawnParticle(Particle.VILLAGER_HAPPY, (double)((float)pos.getX() + itemRand.nextFloat()), pos.getY() + (double)itemRand.nextFloat() * 1.0f, (double)((float)pos.getZ() + itemRand.nextFloat()), 0, d0, d1, d2);
+            }
+        }
     }
 }
