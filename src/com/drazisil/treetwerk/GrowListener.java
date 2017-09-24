@@ -3,28 +3,24 @@ package com.drazisil.treetwerk;
 /**
  * Created by jwbec on 7/16/2017.
  */
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.player.PlayerEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.world.StructureGrowEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.material.Sapling;
 
-import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import static java.lang.Integer.parseInt;
+import static org.bukkit.Material.AIR;
 import static org.bukkit.Material.SAPLING;
 
 public final class GrowListener implements Listener {
@@ -43,68 +39,78 @@ public final class GrowListener implements Listener {
     }
 
     @EventHandler
-    public void EventListener(PlayerToggleSneakEvent event) {
+    public void SneakListener(PlayerToggleSneakEvent event) {
 
+        // Is the player sneaking?
         if (event.isSneaking()) {
-            Location location = event.getPlayer().getLocation();
-            World world = location.getWorld();
-            Block belowBlock = world.getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ());
-            if (belowBlock.getType() == SAPLING) {
-                logger.info("Sapping Before at " + belowBlock.getLocation().toString() + ": " + belowBlock.toString());
 
-                BlockState state = belowBlock.getState();
-                MaterialData data = state.getData();
-                Sapling sap = (Sapling) data;
-                sap.setIsInstantGrowable(true);
-                state.setData(sap);
-                state.update(true, true);
+            // Get world that event occured in
+            World playerWorld = event.getPlayer().getWorld();
 
-                String oldTimeSpeed = world.getGameRuleValue("randomTickSpeed");
+            // Get get the block that player is sneaking on
+            Block sneakBlock = playerWorld.getBlockAt(event.getPlayer().getLocation());
 
-                // Set randomTickSpeed to higher
-                location.getWorld().setGameRuleValue("randomTickSpeed", "20");
-                logger.info("Tick: " + world.getGameRuleValue("randomTickSpeed"));
 
-                // Schedule randomTimeSpeed game rule to return to normal.
-                Bukkit.getServer().getScheduler().runTaskLater(TreeTwerk.getPlugin(), () -> {
-                    location.getWorld().setGameRuleValue("randomTickSpeed", oldTimeSpeed);
-                    logger.info("Tick: " + world.getGameRuleValue("randomTickSpeed"));
-                },5);//run code in run() after ticksToWait ticks
+            // Get block to the north
+            Block sneakBlockNorth = sneakBlock.getRelative(BlockFace.NORTH);
 
-                spawnBonemealParticles(location.getWorld(), location);
+            // Get block above player's feet
+            Block aboveSneakBlockNorth = sneakBlockNorth.getRelative(BlockFace.UP);
+
+            if (sneakBlockNorth.getType() == SAPLING) {
+                logger.info("Sappling Before at " + sneakBlockNorth.getLocation().toString() + ": " + sneakBlockNorth.toString());
+
+                BlockState sneakBlockNorthState = sneakBlockNorth.getState();
+                MaterialData sneakBlockNorthData = sneakBlockNorthState.getData();
+                Sapling saplingNorthData = (Sapling) sneakBlockNorthData;
+                saplingNorthData.setIsInstantGrowable(true);
+                sneakBlockNorthState.setData(saplingNorthData);
+                sneakBlockNorthState.update();
+
+                // Spawn bonemeal particles
+                spawnBonemealParticles(playerWorld, aboveSneakBlockNorth.getLocation(), 0);
+
+                // Update the block above the block the player is sneaking on
+                BlockState aboveSneakBlockState = aboveSneakBlockNorth.getState();
+                aboveSneakBlockState.setType(AIR);
+                aboveSneakBlockState.update(true, true);
 
                 // setIsInstantGrowable(true);
-                logger.info("Sapping After at " + belowBlock.getLocation().toString() + ": " + belowBlock.toString());
-            } else {
+                logger.info("Sappling After at " + sneakBlockNorth.getLocation().toString() + ": " + sneakBlockNorth.toString());
             }
         }
 
     }
 
-    private static void spawnBonemealParticles(World worldIn, Location pos)
+    private static void spawnBonemealParticles(World worldIn, Location pos, int amount)
     {
+        if (amount == 0)
+        {
+            amount = 15;
+        }
+
         Random itemRand = new Random();
 
         BlockState iblockstate = worldIn.getBlockAt(pos).getState();
 
         if (iblockstate.getType() != Material.AIR)
         {
-            for (int i = 0; i < 15; ++i)
+            for (int i = 0; i < amount; ++i)
             {
                 double d0 = itemRand.nextGaussian() * 0.02D;
                 double d1 = itemRand.nextGaussian() * 0.02D;
                 double d2 = itemRand.nextGaussian() * 0.02D;
-                worldIn.spawnParticle(Particle.VILLAGER_HAPPY, (double)((float)pos.getX() + itemRand.nextFloat()), pos.getY() + (double)itemRand.nextFloat() * iblockstate.getLocation(pos).getY(), (double)((float)pos.getZ() + itemRand.nextFloat()), 0, d0, d1, d2);
+                worldIn.spawnParticle(Particle.VILLAGER_HAPPY, (double)((float)pos.getX() + itemRand.nextFloat()), pos.getY() + (double)itemRand.nextFloat() * pos.getY() + 1, (double)((float)pos.getZ() + itemRand.nextFloat()), 1, d0, d1, d2);
             }
         }
         else
         {
-            for (int i1 = 0; i1 < 15; ++i1)
+            for (int i1 = 0; i1 < amount; ++i1)
             {
                 double d0 = itemRand.nextGaussian() * 0.02D;
                 double d1 = itemRand.nextGaussian() * 0.02D;
                 double d2 = itemRand.nextGaussian() * 0.02D;
-                worldIn.spawnParticle(Particle.VILLAGER_HAPPY, (double)((float)pos.getX() + itemRand.nextFloat()), pos.getY() + (double)itemRand.nextFloat() * 1.0f, (double)((float)pos.getZ() + itemRand.nextFloat()), 0, d0, d1, d2);
+                worldIn.spawnParticle(Particle.VILLAGER_HAPPY, (double)((float)pos.getX() + itemRand.nextFloat()), (double)pos.getY() + (double)itemRand.nextFloat() * 1.0f, (double)((float)pos.getZ() + itemRand.nextFloat()), 1, d0, d1, d2);
             }
         }
     }
