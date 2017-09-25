@@ -3,17 +3,14 @@ package com.drazisil.treetwerk;
 /**
  * Created by jwbec on 7/16/2017.
  */
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.World;
+
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.material.MaterialData;
 import org.bukkit.material.Sapling;
 
@@ -27,16 +24,7 @@ public final class GrowListener implements Listener {
 
 
 
-    public final Logger logger = Logger.getLogger("MineCraft");
-
-    @EventHandler
-    public void GrowEvent(StructureGrowEvent event) {
-
-        // Set randomTickSpeed to 3
-
-        logger.info("Grow at " + event.getLocation().toString() + ", Bonemeal?: " + String.valueOf(event.isFromBonemeal()));
-
-    }
+    private final Logger logger = Logger.getLogger("MineCraft");
 
     @EventHandler
     public void SneakListener(PlayerToggleSneakEvent event) {
@@ -58,7 +46,7 @@ public final class GrowListener implements Listener {
             Block aboveSneakBlockNorth = sneakBlockNorth.getRelative(BlockFace.UP);
 
             if (sneakBlockNorth.getType() == SAPLING) {
-                logger.info("Sappling Before at " + sneakBlockNorth.getLocation().toString() + ": " + sneakBlockNorth.toString());
+                // logger.info("Sappling Before at " + sneakBlockNorth.getLocation().toString() + ": " + sneakBlockNorth.toString());
 
                 BlockState sneakBlockNorthState = sneakBlockNorth.getState();
                 MaterialData sneakBlockNorthData = sneakBlockNorthState.getData();
@@ -70,13 +58,12 @@ public final class GrowListener implements Listener {
                 // Spawn bonemeal particles
                 spawnBonemealParticles(playerWorld, aboveSneakBlockNorth.getLocation(), 0);
 
-                // Update the block above the block the player is sneaking on
-                BlockState aboveSneakBlockState = aboveSneakBlockNorth.getState();
-                aboveSneakBlockState.setType(AIR);
-                aboveSneakBlockState.update(true, true);
+                sneakBlockNorthState.setType(AIR);
+                sneakBlockNorthState.update(true);
 
-                // setIsInstantGrowable(true);
-                logger.info("Sappling After at " + sneakBlockNorth.getLocation().toString() + ": " + sneakBlockNorth.toString());
+                playerWorld.generateTree(sneakBlockNorth.getLocation(), TreeType.ACACIA);
+
+                // logger.info("Sappling After at " + sneakBlockNorth.getLocation().toString() + ": " + sneakBlockNorth.toString());
             }
         }
 

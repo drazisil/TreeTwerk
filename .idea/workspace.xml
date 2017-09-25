@@ -7,7 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efb8aa73-bd26-49c2-8f53-d630b3b5ee7e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/drazisil/treetwerk/ExampleTask.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/drazisil/treetwerk/EventListener.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/drazisil/treetwerk/ExampleTask.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/drazisil/treetwerk/GrowListener.java" afterPath="$PROJECT_DIR$/src/com/drazisil/treetwerk/GrowListener.java" />
     </list>
@@ -27,8 +28,8 @@
       <file leaf-file-name="TreeTwerk.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/drazisil/treetwerk/TreeTwerk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="23" column="5" lean-forward="false" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+            <state relative-caret-position="221">
+              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#544#545#0" expanded="true" />
@@ -61,8 +62,8 @@
       <file leaf-file-name="GrowListener.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/drazisil/treetwerk/GrowListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-34">
-              <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+            <state relative-caret-position="-470">
+              <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -106,8 +107,8 @@
         <option value="$PROJECT_DIR$/src/com/drazisil/treetwerk/DeathListener.java" />
         <option value="$PROJECT_DIR$/src/com/drazisil/treetwerk/EventListener.java" />
         <option value="$PROJECT_DIR$/src/com/drazisil/treetwerk/event/BonemealEvent.java" />
-        <option value="$PROJECT_DIR$/src/com/drazisil/treetwerk/TreeTwerk.java" />
         <option value="$PROJECT_DIR$/src/com/drazisil/treetwerk/ExampleTask.java" />
+        <option value="$PROJECT_DIR$/src/com/drazisil/treetwerk/TreeTwerk.java" />
         <option value="$PROJECT_DIR$/src/com/drazisil/treetwerk/GrowListener.java" />
       </list>
     </option>
@@ -204,7 +205,7 @@
               <item name="spigot-api-1.12.1-R0.1-20170812.230752-16.jar" type="462c0819:PsiDirectoryNode" />
               <item name="org" type="462c0819:PsiDirectoryNode" />
               <item name="bukkit" type="462c0819:PsiDirectoryNode" />
-              <item name="block" type="462c0819:PsiDirectoryNode" />
+              <item name="inventory" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -656,12 +657,12 @@
       <workItem from="1503726649326" duration="617000" />
       <workItem from="1503877381426" duration="42000" />
       <workItem from="1506130277910" duration="41000" />
-      <workItem from="1506131340789" duration="20705000" />
+      <workItem from="1506131340789" duration="28206000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42546000" />
+    <option name="totallyTimeSpent" value="50047000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="97" y="32" width="1400" height="820" extended-state="0" />
@@ -713,18 +714,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/drazisil/treetwerk/TreeTwerk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#544#545#0" expanded="true" />
-            <element signature="e#573#574#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -946,9 +935,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
           <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1096,27 +1083,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/drazisil/treetwerk/TreeTwerk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="23" column="5" lean-forward="false" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#544#545#0" expanded="true" />
-            <element signature="e#573#574#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drazisil/treetwerk/ExampleTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="1" lean-forward="false" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#277#278#0" expanded="false" />
-            <element signature="e#313#314#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1136,14 +1107,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../../spigot-api-1.12.1-R0.1-20170812.230752-16.jar!/org/bukkit/block/BlockState.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="53" column="16" lean-forward="false" selection-start-line="53" selection-start-column="16" selection-end-line="53" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../../spigot-api-1.12.1-R0.1-20170812.230752-16.jar!/org/bukkit/block/Block.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1152,10 +1115,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$PROJECT_DIR$/../../spigot-api-1.12.1-R0.1-20170812.230752-16.jar!/org/bukkit/inventory/ItemStack.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-306">
+          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/drazisil/treetwerk/TreeTwerk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#544#545#0" expanded="true" />
+            <element signature="e#573#574#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../spigot-api-1.12.1-R0.1-20170812.230752-16.jar!/org/bukkit/block/BlockState.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="53" column="16" lean-forward="false" selection-start-line="53" selection-start-column="16" selection-end-line="53" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/drazisil/treetwerk/GrowListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+        <state relative-caret-position="-470">
+          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
