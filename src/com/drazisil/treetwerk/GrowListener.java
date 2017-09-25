@@ -23,7 +23,6 @@ import static org.bukkit.Material.SAPLING;
 public final class GrowListener implements Listener {
 
 
-
     private final Logger logger = Logger.getLogger("MineCraft");
 
     @EventHandler
@@ -32,40 +31,60 @@ public final class GrowListener implements Listener {
         // Is the player sneaking?
         if (event.isSneaking()) {
 
-            // Get world that event occured in
+            // Get world that event occurred in
             World playerWorld = event.getPlayer().getWorld();
 
-            // Get get the block that player is sneaking on
+            // Get the block that player is sneaking on
             Block sneakBlock = playerWorld.getBlockAt(event.getPlayer().getLocation());
 
+            // TODO: Search for saplings in a radius
 
             // Get block to the north
             Block sneakBlockNorth = sneakBlock.getRelative(BlockFace.NORTH);
 
-            // Get block above player's feet
-            Block aboveSneakBlockNorth = sneakBlockNorth.getRelative(BlockFace.UP);
-
             if (sneakBlockNorth.getType() == SAPLING) {
-                // logger.info("Sappling Before at " + sneakBlockNorth.getLocation().toString() + ": " + sneakBlockNorth.toString());
 
-                BlockState sneakBlockNorthState = sneakBlockNorth.getState();
-                MaterialData sneakBlockNorthData = sneakBlockNorthState.getData();
-                Sapling saplingNorthData = (Sapling) sneakBlockNorthData;
-                saplingNorthData.setIsInstantGrowable(true);
-                sneakBlockNorthState.setData(saplingNorthData);
-                sneakBlockNorthState.update();
+                // TODO: Don't always grow
 
-                // Spawn bonemeal particles
-                spawnBonemealParticles(playerWorld, aboveSneakBlockNorth.getLocation(), 0);
-
-                sneakBlockNorthState.setType(AIR);
-                sneakBlockNorthState.update(true);
-
-                playerWorld.generateTree(sneakBlockNorth.getLocation(), TreeType.ACACIA);
-
-                // logger.info("Sappling After at " + sneakBlockNorth.getLocation().toString() + ": " + sneakBlockNorth.toString());
+                growTreeAt(playerWorld, sneakBlockNorth);
             }
         }
+
+    }
+
+    private void growTreeAt(World world, Block block) {
+        // logger.info("Sappling Before at " + sneakBlockNorth.getLocation().toString() + ": " + sneakBlockNorth.toString());
+
+        BlockState blockState = block.getState();
+        MaterialData sneakBlockNorthData = blockState.getData();
+        Sapling blockNorthData = (Sapling) sneakBlockNorthData;
+
+        // Get block above
+        Block aboveBlock = block.getRelative(BlockFace.UP);
+
+        // Spawn bonemeal particles
+        spawnBonemealParticles(world, aboveBlock.getLocation(), 0);
+
+        blockState.setType(AIR);
+        blockState.update(true);
+
+        // Get what kind of sapling it is
+        String species = ((Sapling) sneakBlockNorthData).getSpecies().name();
+
+        switch (species) {
+            case "BIRCH":
+                world.generateTree(block.getLocation(), TreeType.BIRCH);
+                break;
+            case "ACACIA":
+                world.generateTree(block.getLocation(), TreeType.ACACIA);
+                break;
+            default:
+                logger.info(species);
+                world.generateTree(block.getLocation(), TreeType.TALL_REDWOOD);
+
+        }
+
+        // logger.info("Sappling After at " + sneakBlockNorth.getLocation().toString() + ": " + sneakBlockNorth.toString());
 
     }
 
